@@ -36,3 +36,20 @@ footer {
 nav span {
 	margin: 0px 10px 0px 0px;
 }
+
+.about-me iframe {
+  height: 113px;
+  width: 225px;
+}
+
+.about-me ul li {
+  display: inline-table;
+  margin: 7px;
+  padding: 5px;
+  border: thin solid;
+  border-radius: 13px;
+}
+
+ul {
+  list-style-type: none;
+}

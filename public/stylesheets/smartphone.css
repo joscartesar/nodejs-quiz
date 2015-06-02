@@ -17,3 +17,8 @@ body {
 footer, input {
 	font-size: large;
 }
+
+.about-me iframe {
+  height: 113px;
+  width: 225px;
+}
