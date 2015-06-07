@@ -40,10 +40,9 @@ exports.Quiz = Quiz; // export table Quiz definition
 Quiz.sync({force: true}).then(function() {
 	Quiz.count().then(function(count) {
 		if (count === 0) { // Initialize table only if empty
-			return Quiz.create({
-        pregunta: 'Capital de Italia',
-        respuesta: 'Roma'})
-			.then(function(){console.log('Base de datos inicializada')});
+			Quiz.create({pregunta: 'Capital de Italia', respuesta: 'Roma'});
+			Quiz.create({pregunta: 'Capital de Portugal', respuesta: 'Lisboa'})
+			.then(function(){console.log('Base de datos inicializada: 2 registros')});
 		};
 	});
 });
