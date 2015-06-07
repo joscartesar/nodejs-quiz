@@ -22,8 +22,8 @@ exports.index = function(req, res) {
 		});
 	}
 	else {
-		var like_query =  "%" + req.query.search.replace(" ", "%") + "%";
-		models.Quiz.findAll({where: {pregunta: {$like: like_query}}, order: "pregunta ASC"}).then(function(quizes) {
+		var like_query =  "%" + req.query.search.toLowerCase().replace(" ", "%") + "%";
+		models.Quiz.findAll({ where: ["lower(pregunta) like ?", like_query], order: "pregunta ASC"}).then(function(quizes) {
 			res.render('quizes/index', {quizes: quizes});
 		});
 	}
