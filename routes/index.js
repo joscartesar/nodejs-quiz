@@ -20,6 +20,9 @@ router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 // Create
 router.get('/quizes/new', quizController.new);
 router.post('/quizes/create', quizController.create);
+// Edit
+router.get('/quizes/:quizId(\\d+)/edit', quizController.edit);
+router.put('/quizes/:quizId(\\d+)', quizController.update);
 
 // GET author page.
 router.get('/author', function(req, res) {
