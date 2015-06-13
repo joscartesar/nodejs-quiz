@@ -35,8 +35,8 @@ var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 exports.Quiz = Quiz; // export table Quiz definition
 
 // sequelize.sync(): Create and initialize questions table in BD
-//sequelize.sync().then(function() {
-	// then(..): Execute handler once the table is created
+// sequelize.sync().then(function() {
+// then(..): Execute handler once the table is created
 Quiz.sync({force: true}).then(function() {
 	Quiz.count().then(function(count) {
 		if (count === 0) { // Initialize table only if empty
