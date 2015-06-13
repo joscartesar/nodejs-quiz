@@ -23,6 +23,8 @@ router.post('/quizes/create', quizController.create);
 // Edit
 router.get('/quizes/:quizId(\\d+)/edit', quizController.edit);
 router.put('/quizes/:quizId(\\d+)', quizController.update);
+// Delete
+router.delete('/quizes/:quizId(\\d+)', quizController.destroy);
 
 // GET author page.
 router.get('/author', function(req, res) {
