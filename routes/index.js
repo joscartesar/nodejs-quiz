@@ -26,6 +26,9 @@ router.put('/quizes/:quizId(\\d+)', quizController.update);
 // Delete
 router.delete('/quizes/:quizId(\\d+)', quizController.destroy);
 
+// Topics
+router.get('/quizes/topics', quizController.topics);
+
 // GET author page.
 router.get('/author', function(req, res) {
 	res.render('author', {errors: []});

@@ -18,7 +18,37 @@ footer, input {
 	font-size: large;
 }
 
+.search-box {
+	width: 90%;
+}
+
 .about-me iframe {
   height: 113px;
   width: 225px;
+}
+
+tbody td::before {
+    content: attr(data-th);
+    display: block;
+    text-align: center;
+    background-color: #A2A1A6;
+}
+tr td:first-child {
+    background: #f0f0f0 none repeat scroll 0 0;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+tbody td {
+    display: block;
+    text-align: center;
+}
+td, th {
+    border-top: 1px solid #ccc;
+    padding: 4px 8px;
+    text-shadow: 0 1px 0 #fff;
+    vertical-align: top;
+}
+
+thead {
+	display: none;
 }

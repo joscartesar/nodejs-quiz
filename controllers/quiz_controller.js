@@ -16,17 +16,19 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-	if (req.query.search == null || req.query.search == "") {
-		models.Quiz.findAll().then(function(quizes) {
-			res.render('quizes/index', {quizes: quizes, errors: []});
-		});
-	}
-	else {
-		var like_query =  "%" + req.query.search.toLowerCase().replace(" ", "%") + "%";
-		models.Quiz.findAll({ where: ["lower(pregunta) like ?", like_query], order: "pregunta ASC"}).then(function(quizes) {
-			res.render('quizes/index', {quizes: quizes, errors: []});
-		});
-	}
+	models.Topic.findAll().then(function(topics) {
+		if (req.query.search == null || req.query.search == "") {
+			models.Quiz.findAll().then(function(quizes) {
+				res.render('quizes/index', {quizes: quizes, topics: topics, errors: []});
+			});
+		}
+		else {
+			var like_query =  "%" + req.query.search.toLowerCase().replace(" ", "%") + "%";
+			models.Quiz.findAll({ where: ["lower(pregunta) like ?", like_query], order: "pregunta ASC"}).then(function(quizes) {
+				res.render('quizes/index', {quizes: quizes, topics: topics, errors: []});
+			});
+		}
+	});
 };
 
 // GET /quizes/:quizId
@@ -49,8 +51,10 @@ exports.answer = function(req, res) {
 
 // GET /quizes/new
 exports.new = function(req, res) {
-	var quiz = models.Quiz.build({pregunta: "", respuesta: ""});
-	res.render('quizes/new', {quiz: quiz, errors: []});
+	models.Topic.findAll().then(function(topics) {
+		var quiz = models.Quiz.build({pregunta: "", respuesta: ""});
+		res.render('quizes/new', {quiz: quiz, topics: topics, errors: []});
+	});
 };
 
 // POST /quizes/create
@@ -62,11 +66,13 @@ exports.create = function(req, res) {
 	.then(
 		function(err) {
 			if (err) {
-				res.render('quizes/new', {quiz: quiz, errors: err.errors});
+				models.Topic.findAll().then(function(topics) {
+					res.render('quizes/new', {quiz: quiz, topics: topics, errors: err.errors});
+				});
 			}
 			else {
 				quiz
-				.save({fields: ["pregunta", "respuesta"]})
+				.save({fields: ["pregunta", "respuesta", "topicId"]})
 				.then(function() {
 					res.redirect('/quizes'); // HTTP redirect to questions list
 				});
@@ -76,26 +82,32 @@ exports.create = function(req, res) {
 
 // GET /quizes/:quizId/edit
 exports.edit = function(req, res) {
-	var quiz = req.quiz; // autoload quiz instance
+	models.Topic.findAll().then(function(topics) {
+		var quiz = req.quiz; // autoload quiz instance
 
-	res.render('quizes/edit', {quiz: quiz, errors: []});
+		res.render('quizes/edit', {quiz: quiz, topics: topics, errors: []});
+	});
+
 };
 
 // PUT /quizes/:quizId
 exports.update = function(req, res) {
 	req.quiz.pregunta = req.body.quiz.pregunta;
 	req.quiz.respuesta = req.body.quiz.respuesta;
+	req.quiz.topicId = req.body.quiz.topicId;
 
 	req.quiz
 	.validate()
 	.then(
 		function(err) {
 			if (err) {
-				res.render('quizes/edit', {quiz: quiz, errors: err.errors});
+				models.Topic.findAll().then(function(topics) {
+					res.render('quizes/edit', {quiz: req.quiz, topics: topics, errors: err.errors});
+				});
 			}
 			else {
 				req.quiz
-				.save({fields: ["pregunta", "respuesta"]})
+				.save({fields: ["pregunta", "respuesta", "topicId"]})
 				.then(function() {
 					res.redirect('/quizes'); // HTTP redirect to questions list
 				});
@@ -109,3 +121,10 @@ exports.destroy = function(req, res) {
 		res.redirect('/quizes');
 	}).catch(function(error) {next(error);});
 };
+
+// Topics view
+exports.topics = function(req, res) {
+	models.Topic.findAll().then(function(topics) {
+		res.render('quizes/topics', {topics: topics, errors: []});
+	});
+}

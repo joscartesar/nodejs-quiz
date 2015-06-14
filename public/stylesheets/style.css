@@ -58,3 +58,28 @@ nav span {
 ul {
   list-style-type: none;
 }
+
+table {
+	width: 100%;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: #eee;
+}
+tr:nth-child(odd) {
+   background-color:#fff;
+}
+th	{
+    background-color: black;
+    color: white;
+}

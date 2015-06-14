@@ -6,6 +6,18 @@
 	<label for="resp" class="rem">Respuesta:</label>
 	<input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>"/>
 </div>
+<div class="create_topic">
+	<label for="topic" class"rem">Temática:</label>
+	<select id="topic" name="quiz[topicId]">
+  		<% for (var i in topics) { %>
+  			<% if (quiz.topicId && (quiz.topicId == topics[i].id)) { %>
+				<option value="<%= topics[i].id %>" selected><%= topics[i].name %></option>
+			<% } else { %>
+				<option value="<%= topics[i].id %>"><%= topics[i].name %></option>
+			<% } %>
+		<% } %>
+	</select>
+</div>
 <div class="create_buttons">
 <a href="/quizes"><button type="button">Cancelar</button></a>
 <input	type="submit" value="Salvar"/>

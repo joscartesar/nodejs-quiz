@@ -1,0 +1,9 @@
+<table>
+	<th colspan="2">Temáticas:</th>
+<% for (var i in topics) { %>
+	<tr>
+		<td><%= topics[i].id %></td>
+		<td><%= topics[i].name %></td>
+	</tr>
+<% } %>
+</table>
