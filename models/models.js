@@ -32,12 +32,16 @@ var sequelize = new Sequelize(
 // Import Quiz and Topic table definitions into quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 var Topic = sequelize.import(path.join(__dirname, 'topic'));
+var Comment = sequelize.import(path.join(__dirname, 'comment'));
 
 // One-to-one association between Quiz and Topic
 Quiz.belongsTo(Topic);
+Quiz.hasMany(Comment);
+// Comment.belongsTo(Quiz);
 
 exports.Quiz = Quiz; // export table Quiz definition
 exports.Topic = Topic; // export table Topic definition
+exports.Comment = Comment; // export table Comment definition
 
 // sequelize.sync(): Create and initialize questions table in BD
 // sequelize.sync().then(function() {
@@ -63,3 +67,5 @@ Topic.sync({force: true}).then(function() {
 		}
 	});
 });
+
+Comment.sync({force: true});
