@@ -83,3 +83,7 @@ th	{
     background-color: black;
     color: white;
 }
+
+.right {
+	float: right;
+}
