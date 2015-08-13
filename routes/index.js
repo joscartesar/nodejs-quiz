@@ -25,13 +25,13 @@ router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 
 // CRUD
 // Create
-router.get('/quizes/new', quizController.new);
-router.post('/quizes/create', quizController.create);
+router.get('/quizes/new', sessionController.loginRequired, quizController.new);
+router.post('/quizes/create', sessionController.loginRequired, quizController.create);
 // Edit
-router.get('/quizes/:quizId(\\d+)/edit', quizController.edit);
-router.put('/quizes/:quizId(\\d+)', quizController.update);
+router.get('/quizes/:quizId(\\d+)/edit', sessionController.loginRequired, quizController.edit);
+router.put('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.update);
 // Delete
-router.delete('/quizes/:quizId(\\d+)', quizController.destroy);
+router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.destroy);
 
 // Topics
 router.get('/quizes/topics', quizController.topics);
