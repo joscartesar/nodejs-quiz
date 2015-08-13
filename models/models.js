@@ -35,9 +35,9 @@ var Topic = sequelize.import(path.join(__dirname, 'topic'));
 var Comment = sequelize.import(path.join(__dirname, 'comment'));
 
 // One-to-one association between Quiz and Topic
-Quiz.belongsTo(Topic);
+Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
-// Comment.belongsTo(Quiz);
+Quiz.belongsTo(Topic);
 
 exports.Quiz = Quiz; // export table Quiz definition
 exports.Topic = Topic; // export table Topic definition
