@@ -68,4 +68,28 @@ Topic.sync({force: true}).then(function() {
 	});
 });
 
-Comment.sync({force: true});
+sequelize.sync().then(function() {
+	//then(..) ejecuta el manejador una vez creada la tabla
+  	Quiz.count().then(function(count) {
+  		if (count === 0) { // Initialize table only if empty
+			Quiz.bulkCreate([
+				{pregunta: 'Capital de Italia', respuesta: 'Roma', topicId: 1},
+				{pregunta: 'Capital de Portugal', respuesta: 'Lisboa', topicId: 1}
+  			]).then(function(){
+                console.log('Base de datos inicializada: 2 preguntas');
+                Topic.count().then(function(count) {
+					if (count === 0) {
+						Topic.bulkCreate([
+							{id: 1, name: 'Humanidades'},
+							{id: 2, name: 'Ocio'},
+							{id: 3, name: 'Ciencia'},
+							{id: 4, name: 'Tecnología'}
+						]).then(function(){console.log('Base de datos inicializada: 4 temáticas')});
+                	};
+            	});
+        	});
+    	};
+  	});
+});
+
+// Comment.sync({force: true});
