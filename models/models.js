@@ -46,28 +46,6 @@ exports.Comment = Comment; // export table Comment definition
 // sequelize.sync(): Create and initialize questions table in BD
 // sequelize.sync().then(function() {
 // then(..): Execute handler once the table is created
-// Quiz.sync({force: true}).then(function() {
-// 	Quiz.count().then(function(count) {
-// 		if (count === 0) { // Initialize table only if empty
-// 			Quiz.create({pregunta: 'Capital de Italia', respuesta: 'Roma', topicId: 1});
-// 			Quiz.create({pregunta: 'Capital de Portugal', respuesta: 'Lisboa', topicId: 1})
-// 			.then(function() {console.log('Base de datos inicializada: 2 preguntas')});
-// 		};
-// 	});
-// });
-
-// Topic.sync({force: true}).then(function() {
-// 	Topic.count().then(function(count) {
-// 		if (count === 0) {
-// 			Topic.create({id: 1, name: 'Humanidades'});
-// 			Topic.create({id: 2, name: 'Ocio'});
-// 			Topic.create({id: 3, name: 'Ciencia'});
-// 			Topic.create({id: 4, name: 'Tecnología'})
-// 			.then(function() {console.log('Base de datos inicializada: 4 temáticas')});
-// 		}
-// 	});
-// });
-
 sequelize.sync().then(function() {
 	//then(..) ejecuta el manejador una vez creada la tabla
   	Topic.count().then(function(count) {
@@ -91,5 +69,3 @@ sequelize.sync().then(function() {
     	};
   	});
 });
-
-// Comment.sync({force: true});
