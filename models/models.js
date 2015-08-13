@@ -35,9 +35,9 @@ var Topic = sequelize.import(path.join(__dirname, 'topic'));
 var Comment = sequelize.import(path.join(__dirname, 'comment'));
 
 // One-to-one association between Quiz and Topic
-Quiz.belongsTo(Topic);
+Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
-// Comment.belongsTo(Quiz);
+Quiz.belongsTo(Topic);
 
 exports.Quiz = Quiz; // export table Quiz definition
 exports.Topic = Topic; // export table Topic definition
@@ -46,26 +46,26 @@ exports.Comment = Comment; // export table Comment definition
 // sequelize.sync(): Create and initialize questions table in BD
 // sequelize.sync().then(function() {
 // then(..): Execute handler once the table is created
-Quiz.sync({force: true}).then(function() {
-	Quiz.count().then(function(count) {
-		if (count === 0) { // Initialize table only if empty
-			Quiz.create({pregunta: 'Capital de Italia', respuesta: 'Roma', topicId: 1});
-			Quiz.create({pregunta: 'Capital de Portugal', respuesta: 'Lisboa', topicId: 1})
-			.then(function() {console.log('Base de datos inicializada: 2 preguntas')});
-		};
-	});
+sequelize.sync().then(function() {
+	//then(..) ejecuta el manejador una vez creada la tabla
+  	Topic.count().then(function(count) {
+  		if (count === 0) { // Initialize table only if empty
+			Topic.bulkCreate([
+				{id: 1, name: 'Humanidades'},
+				{id: 2, name: 'Ocio'},
+				{id: 3, name: 'Ciencia'},
+				{id: 4, name: 'Tecnología'}
+  			]).then(function(){
+                console.log('Base de datos inicializada: 4 temáticas');
+                Quiz.count().then(function(count) {
+					if (count === 0) {
+						Quiz.bulkCreate([
+							{pregunta: 'Capital de Italia', respuesta: 'Roma', topicId: 1},
+							{pregunta: 'Capital de Portugal', respuesta: 'Lisboa', topicId: 1}
+						]).then(function(){console.log('Base de datos inicializada: 2 preguntas')});
+                	};
+            	});
+        	});
+    	};
+  	});
 });
-
-Topic.sync({force: true}).then(function() {
-	Topic.count().then(function(count) {
-		if (count === 0) {
-			Topic.create({id: 1, name: 'Humanidades'});
-			Topic.create({id: 2, name: 'Ocio'});
-			Topic.create({id: 3, name: 'Ciencia'});
-			Topic.create({id: 4, name: 'Tecnología'})
-			.then(function() {console.log('Base de datos inicializada: 4 temáticas')});
-		}
-	});
-});
-
-Comment.sync({force: true});
