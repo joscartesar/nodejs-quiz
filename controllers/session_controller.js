@@ -20,6 +20,8 @@ exports.new = function(req, res) {
 exports.create = function(req, res) {
 	var login = req.body.login;
 	var password = req.body.password;
+	var date = new Date();
+	var ts = date.getTime();
 
 	var userController = require('./user_controller');
 	userController.authenticate(login, password, function(error, user) {
@@ -29,8 +31,8 @@ exports.create = function(req, res) {
 			res.redirect("/login");
 			return;
 		}
-		// Create de session
-		req.session.user = {id:user.id, username:user.username};
+		// Create de session and set timestamp for auto-logout feature
+		req.session.user = {id:user.id, username:user.username, timestamp: ts};
 		// Redirect to previous path
 		res.redirect(req.session.redir.toString());
 	});
